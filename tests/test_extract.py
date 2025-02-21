@@ -1,5 +1,5 @@
 import unittest
-from extract_github import extract_repo
+from src.extract_github import extract_repo
 
 class TestExtractGithub(unittest.TestCase):
     def test_valid_repo(self):

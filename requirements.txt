@@ -1,3 +1,4 @@
-requests
-pathlib
-zipfile36
+requests>=2.31.0
+zipfile36>=0.1.3
+pyinstaller>=6.3.0
+Pillow>=10.0.0 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from extract_github import extract_repo
+from src.extract_github import extract_repo
 
 def main():
     print("🔹 Welcome to GitHub Repository Extractor 🔹")

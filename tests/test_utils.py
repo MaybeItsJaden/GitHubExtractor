@@ -1,5 +1,5 @@
 import unittest
-from utils import validate_url
+from src.utils import validate_url
 
 class TestUtils(unittest.TestCase):
     def test_validate_url(self):
