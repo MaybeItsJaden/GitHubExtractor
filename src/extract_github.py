@@ -24,7 +24,10 @@ def extract_repo(repo_url):
     zip_path = temp_dir / f"{repo_name}.zip"
     extract_path = temp_dir / repo_name
     
-    # Construct the download URL for the zip file
+    # Remove .git from the URL if present
+    repo_url = repo_url.rstrip('/')
+    if repo_url.endswith('.git'):
+        repo_url = repo_url[:-4]
     download_url = f"{repo_url}/archive/master.zip"
     if not download_url.startswith(('http://', 'https://')):
         download_url = f"https://github.com/{download_url}"
