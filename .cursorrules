@@ -1,0 +1,104 @@
+{
+    "name": "GitHub Extractor Project Rules",
+    "version": "1.0",
+    "description": "Rules for GitHub Extractor Python application with modular architecture and modern UI frameworks",
+    
+    "formatting": {
+      "indentSize": 4,
+      "useTabs": false,
+      "maxLineLength": 88,
+      "quoteStyle": "double",
+      "docstringStyle": "google"
+    },
+    
+    "conventions": {
+      "projectStructure": {
+        "src": {
+          "core": "Core functionality for repository extraction",
+          "ui": {
+            "cli": "Command-line interface",
+            "gui": "Graphical user interfaces"
+          },
+          "utils": "Utility functions",
+          "services": "External service integrations"
+        },
+        "tests": "Test files",
+        "build_scripts": "Build and packaging scripts",
+        "resources": "Static resources like icons"
+      },
+      "naming": {
+        "functions": "snake_case",
+        "variables": "snake_case",
+        "classes": "PascalCase",
+        "constants": "UPPER_SNAKE_CASE"
+      },
+      "imports": {
+        "orderStyle": "standard",
+        "grouping": ["standard_library", "third_party", "local"]
+      }
+    },
+    
+    "ai": {
+      "contextSize": 10,
+      "preferredPatterns": [
+        "Factory Pattern",
+        "Strategy Pattern",
+        "Repository Pattern",
+        "Dependency Injection",
+        "Command Pattern",
+        "Observer Pattern",
+        "MVC Architecture",
+        "Async/Await",
+        "Type Hints",
+        "Modular Design"
+      ],
+      "avoid": [
+        "Global Variables",
+        "Circular Imports",
+        "Tightly Coupled Components",
+        "Deep Inheritance Hierarchies",
+        "Manual Resource Management"
+      ],
+      "ui": {
+        "preferred": ["PyQt6", "PySide6", "CustomTkinter", "Tkinter"],
+        "avoid": ["Wx", "Kivy"]
+      }
+    },
+    
+    "snippets": {
+      "extraction_service": "import requests\nimport zipfile\nimport tempfile\nfrom pathlib import Path\nfrom typing import Dict, List, Optional, Union\n\nclass ExtractionService:\n    \"\"\"Service for extracting repositories from various sources.\"\"\"\n    \n    def __init__(self, output_dir: Path = Path(\"extracted_repos\")):\n        \"\"\"Initialize the extraction service.\n        \n        Args:\n            output_dir: Directory to store extracted repositories\n        \"\"\"\n        self.output_dir = output_dir\n        self.output_dir.mkdir(exist_ok=True)\n    \n    async def extract_from_github(self, repo_url: str) -> Path:\n        \"\"\"Extract a repository from GitHub.\n        \n        Args:\n            repo_url: URL of the GitHub repository\n            \n        Returns:\n            Path to the extracted repository data file\n        \"\"\"\n        # Implementation\n        pass",
+      
+      "gui_component": "from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton\nfrom PyQt6.QtCore import pyqtSignal\n\nclass RepositoryInputWidget(QWidget):\n    \"\"\"Widget for inputting repository URL.\"\"\"\n    \n    extractionRequested = pyqtSignal(str)\n    \n    def __init__(self, parent=None):\n        \"\"\"Initialize the widget.\n        \n        Args:\n            parent: Parent widget\n        \"\"\"\n        super().__init__(parent)\n        self.setup_ui()\n    \n    def setup_ui(self):\n        \"\"\"Set up the user interface.\"\"\"\n        layout = QVBoxLayout(self)\n        \n        # URL input\n        self.url_input = QLineEdit()\n        self.url_input.setPlaceholderText(\"Enter GitHub repository URL\")\n        \n        # Extract button\n        self.extract_button = QPushButton(\"Extract\")\n        self.extract_button.clicked.connect(self.on_extract_clicked)\n        \n        # Add widgets to layout\n        layout.addWidget(QLabel(\"Repository URL:\"))\n        layout.addWidget(self.url_input)\n        layout.addWidget(self.extract_button)\n    \n    def on_extract_clicked(self):\n        \"\"\"Handle extract button click.\"\"\"\n        url = self.url_input.text().strip()\n        if url:\n            self.extractionRequested.emit(url)",
+      
+      "test_case": "import unittest\nfrom unittest.mock import patch, MagicMock\nfrom pathlib import Path\n\nfrom src.core.extraction import ExtractionService\n\nclass TestExtractionService(unittest.TestCase):\n    \"\"\"Tests for the ExtractionService class.\"\"\"\n    \n    def setUp(self):\n        \"\"\"Set up test environment.\"\"\"\n        self.temp_dir = Path(\"test_output\")\n        self.temp_dir.mkdir(exist_ok=True)\n        self.service = ExtractionService(output_dir=self.temp_dir)\n    \n    def tearDown(self):\n        \"\"\"Clean up test environment.\"\"\"\n        # Clean up test files\n        if self.temp_dir.exists():\n            for file in self.temp_dir.iterdir():\n                file.unlink()\n            self.temp_dir.rmdir()\n    \n    @patch('src.core.extraction.requests.get')\n    def test_extract_from_github(self, mock_get):\n        \"\"\"Test GitHub repository extraction.\"\"\"\n        # Setup mock response\n        mock_response = MagicMock()\n        mock_response.status_code = 200\n        mock_response.headers = {'content-length': '1000'}\n        mock_response.iter_content.return_value = [b'test data']\n        mock_get.return_value = mock_response\n        \n        # Call the method\n        result = self.service.extract_from_github(\"https://github.com/user/repo\")\n        \n        # Assertions\n        self.assertTrue(result.exists())\n        mock_get.assert_called_once()"
+    },
+    
+    "dependencies": {
+      "recommended": [
+        "python>=3.8,<4.0",
+        "requests>=2.31.0",
+        "pyqt6>=6.0.0",
+        "pytest>=7.0.0",
+        "black>=23.0.0",
+        "isort>=5.0.0",
+        "mypy>=1.0.0",
+        "pillow>=10.0.0"
+      ]
+    },
+    
+    "tools": {
+      "linting": ["flake8", "pylint"],
+      "formatting": ["black", "isort"],
+      "typeChecking": "mypy",
+      "testing": "pytest"
+    },
+    
+    "prettier": {
+      "enabled": true,
+      "semi": true,
+      "singleQuote": false,
+      "tabWidth": 4,
+      "printWidth": 88,
+      "trailingComma": "es5"
+    }
+  }
